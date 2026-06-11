@@ -40,6 +40,7 @@ const CONFIG = {
     local:       6,  // G – Local de retirada e devolução
     turno:       7,  // H – Turno
     ocupantes:   8,  // I – Ocupantes
+    cidadeDestino: 9, // J – Cidade de destino
   },
 
   // Placas que possuem tag de pedágio Sem Parar
@@ -140,8 +141,9 @@ function renderCard(row, index) {
   const dataInicial = row[col.dataInicial] || '—';
   const dataFinal   = row[col.dataFinal]   || '—';
   const local       = row[col.local]       || '—';
-  const turno       = row[col.turno]       || '—';
-  const ocupantes   = row[col.ocupantes]   || '';
+  const turno         = row[col.turno]         || '—';
+  const ocupantes     = row[col.ocupantes]     || '';
+  const cidadeDestino = row[col.cidadeDestino] || '';
 
   const { placa, modelo } = parseVeiculo(veiculoRaw);
   const status = 'Confirmado';
@@ -177,6 +179,10 @@ function renderCard(row, index) {
           <div class="info-lbl">🕐 Turno</div>
           <div class="info-val">${turno}</div>
         </div>
+        ${cidadeDestino ? `<div class="info-item">
+          <div class="info-lbl">🏙️ Cidade de destino</div>
+          <div class="info-val">${cidadeDestino}</div>
+        </div>` : ''}
       </div>
 
       <div class="car-block">
