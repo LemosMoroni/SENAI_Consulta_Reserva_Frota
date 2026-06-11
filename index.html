@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SENAI – Reserva de Veículos</title>
+  <link rel="icon" type="image/png" href="Logo-S.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Barlow+Condensed:wght@700;800;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-wrap">
+        <img src="Logo-SENAI_EP.png" alt="SENAI" class="logo-img" />
+      </div>
+      <div class="header-text">
+        <h1>Reserva de Veículos</h1>
+        <p>Consulte seu transporte agendado</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <section class="search-card">
+      <div class="search-eyebrow">
+        <span class="eyebrow-bar"></span>
+        <span>Consulta rápida</span>
+      </div>
+      <h2>Encontre sua reserva</h2>
+      <p class="search-sub">Digite seu nome para verificar o veículo e o destino da sua viagem.</p>
+
+      <div class="field-wrap">
+        <label for="inputNome">Nome do professor</label>
+        <input
+          type="text"
+          id="inputNome"
+          placeholder="Ex: João da Silva"
+          autocomplete="name"
+          autocapitalize="words"
+        />
+      </div>
+
+      <div class="field-wrap">
+        <label for="inputData">Data <span class="label-opcional">(opcional)</span></label>
+        <input
+          type="date"
+          id="inputData"
+        />
+      </div>
+
+      <button class="btn-buscar" id="btnBuscar" onclick="buscar()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        Consultar Reserva
+      </button>
+    </section>
+
+    <div class="loading-wrap" id="loadingWrap" hidden>
+      <div class="spinner"></div>
+      <p>Consultando a planilha...</p>
+    </div>
+
+    <div class="empty-state" id="emptyState" hidden>
+      <div class="empty-emoji">🔍</div>
+      <h3>Nenhuma reserva encontrada</h3>
+      <p>Não encontramos reservas para <strong id="nomeNaoEncontrado"></strong>.<br>
+         Verifique a grafia ou fale com a secretaria.</p>
+      <button class="btn-novo" onclick="limpar()">Fazer nova busca</button>
+    </div>
+
+    <section id="resultSection" hidden>
+      <div class="result-bar">
+        <span id="resultCount" class="result-count"></span>
+        <button class="btn-limpar" onclick="limpar()">← Nova busca</button>
+      </div>
+      <div id="resultList"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <img src="Logo-S.png" alt="SENAI" class="footer-logo" />
+    SENAI Santa Catarina &nbsp;·&nbsp; Sistema de Reserva de Veículos
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
