@@ -254,14 +254,26 @@ async function buscar() {
 }
 
 /**
- * Converte "dd/mm/aaaa, hh:mm" → "aaaa-mm-dd" para comparar com input[type=date]
- * Também aceita "dd/mm/aaaa" sem horário.
+ * Converte vários formatos de data para "aaaa-mm-dd" (para comparar com input[type=date]).
+ * Aceita: "dd/mm/aaaa", "dd/mm/aaaa, hh:mm", ISO "aaaa-mm-dd", e o formato
+ * bruto do GViz "Date(aaaa,m,d)" onde o mês é base 0.
  */
 function parseDateCell(val) {
   if (!val) return '';
-  const match = val.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
-  if (!match) return '';
-  return `${match[3]}-${match[2]}-${match[1]}`;
+  // "dd/mm/aaaa" (1 ou 2 dígitos), com ou sem horário
+  let m = val.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if (m) return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+  // ISO "aaaa-mm-dd"
+  m = val.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (m) return `${m[1]}-${m[2]}-${m[3]}`;
+  // GViz bruto "Date(aaaa,m,d,...)" — mês base 0
+  m = val.match(/^Date\((\d{4}),(\d{1,2}),(\d{1,2})/);
+  if (m) {
+    const mes = String(+m[2] + 1).padStart(2,'0');
+    const dia = String(+m[3]).padStart(2,'0');
+    return `${m[1]}-${mes}-${dia}`;
+  }
+  return '';
 }
 
 /** Filtra por nome do motorista (e data opcional) e renderiza os cards */
